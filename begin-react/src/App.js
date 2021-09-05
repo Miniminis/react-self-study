@@ -1,4 +1,4 @@
-import React, { useRef, useState, useMemo } from "react";
+import React, { useRef, useState, useMemo, useCallback } from "react";
 import CreateUser from "./CreateUser";
 import UserList from "./UserList";
 
@@ -10,13 +10,13 @@ function App() {
 
   const { username, email } = inputs;
 
-  const onChange = (e) => {
+  const onChange = useCallback((e) => {
     const {name, value} = e.target;
     setInputs({
       ...inputs,
       [name]: value
     });
-  };
+  }, [inputs]);
 
   const [users, setUsers] = useState([
       {
@@ -41,7 +41,7 @@ function App() {
 
   const nextId = useRef(4);   //굳이 리렌더링할 필요없는 값
   
-  const onCreate = () => {
+  const onCreate = useCallback(() => {
     const user = {
       id : nextId.current,
       username,
@@ -58,24 +58,24 @@ function App() {
     });
 
     nextId.current += 1;
-  };
+  }, [username, email, users]);
 
-  const onRemove = id => {
+  const onRemove = useCallback(id => {
     setUsers(users.filter(user => user.id !== id));    //삭제하기 버튼 click 하지 않은 요소들만 새로 filter 통과하여 새로운 배열이 됨
-  }
+  }, [users]);
 
-  const onToggle = id => {
+  const onToggle = useCallback(id => {
     setUsers(users.map(
       user => user.id === id
       ? { ...user, active: !user.active } 
       : user
     ));
-  };
+  }, [users]);
 
-  const onCountActiveUsers = () => {
+  const onCountActiveUsers = useCallback(() => {
     console.log('active user cnt!');
     return users.filter(user => user.active).length;
-  }
+  }, [users]);
 
   const activeUserCnt = useMemo(()=> onCountActiveUsers(users), [users]);
 
