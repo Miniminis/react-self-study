@@ -57,6 +57,10 @@ function App() {
     nextId.current += 1;
   };
 
+  const onRemove = id => {
+    setUsers(users.filter(user => user.id !== id));    //삭제하기 버튼 click 하지 않은 요소들만 새로 filter 통과하여 새로운 배열이 됨
+  }
+
   return (
       <>
         <CreateUser 
@@ -64,7 +68,9 @@ function App() {
           email={email}
           onChange={onChange}
           onCreate={onCreate} />
-        <UserList users={users}/>
+        <UserList 
+          users={users}
+          onRemove={onRemove}/>
       </>
   );
 }
