@@ -61,16 +61,16 @@ function App() {
   }, [username, email, users]);
 
   const onRemove = useCallback(id => {
-    setUsers(users.filter(user => user.id !== id));    //삭제하기 버튼 click 하지 않은 요소들만 새로 filter 통과하여 새로운 배열이 됨
-  }, [users]);
+    setUsers(users => users.filter(user => user.id !== id));    //삭제하기 버튼 click 하지 않은 요소들만 새로 filter 통과하여 새로운 배열이 됨
+  }, []);
 
   const onToggle = useCallback(id => {
-    setUsers(users.map(
+    setUsers(users => users.map(
       user => user.id === id
       ? { ...user, active: !user.active } 
       : user
     ));
-  }, [users]);
+  }, []);
 
   const onCountActiveUsers = useCallback(() => {
     console.log('active user cnt!');
