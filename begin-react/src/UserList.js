@@ -6,19 +6,14 @@ function User({ user, onRemove, onToggle }) {
         color : active ? 'green' : 'black',
         cursor : 'pointer'
     };
-    useEffect(() => {
-        console.log('컴포넌트 화면에 나타남');
-        //props -> state
-        //setInterval, setTimeout
-        //Rest API
-        //D3 video.js
-
+    useEffect (() => {
+        console.log('값이 바뀐 뒤에 호출됨')
+        console.log(user);
         return () => {
-            console.log('컴포넌트 화면에서 사라짐');
-            //clearInterval, clearTimeout
-            //라이브러리 인스턴스 제거 
-        };
-    }, []);
+            console.log('값이 바뀌기 전에 호출됨')
+            console.log(user);
+        }
+    }, [user]);
 
     return (
         <div>
