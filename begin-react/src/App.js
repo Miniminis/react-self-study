@@ -22,17 +22,20 @@ function App() {
       {
           id: 1,
           username : 'flash',
-          email: 'flash@gmail.com'
+          email: 'flash@gmail.com',
+          active : true
       },
       {
           id: 2,
           username : 'beak',
-          email: 'beak@gmail.com'
+          email: 'beak@gmail.com',
+          active : false
       },
       {
           id: 3,
           username : 'black',
-          email: 'black@gmail.com'
+          email: 'black@gmail.com',
+          active : true
       }
   ]);
 
@@ -61,6 +64,14 @@ function App() {
     setUsers(users.filter(user => user.id !== id));    //삭제하기 버튼 click 하지 않은 요소들만 새로 filter 통과하여 새로운 배열이 됨
   }
 
+  const onToggle = id => {
+    setUsers(users.map(
+      user => user.id === id
+      ? { ...user, active: !user.active } 
+      : user
+    ));
+  };
+
   return (
       <>
         <CreateUser 
@@ -70,7 +81,8 @@ function App() {
           onCreate={onCreate} />
         <UserList 
           users={users}
-          onRemove={onRemove}/>
+          onRemove={onRemove}
+          onToggle={onToggle}/>
       </>
   );
 }
