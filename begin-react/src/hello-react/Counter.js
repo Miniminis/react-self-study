@@ -11,7 +11,7 @@ function reducer (state, action) {
     };
 };
 
-function Count() {    
+function Count() {
     const [number, dispatch] = useReducer(reducer, 0);
 
     const onIncrease = () => {
