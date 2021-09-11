@@ -1,14 +1,10 @@
 import React, { useRef, useReducer, useState, useMemo, useCallback } from "react";
 import CreateUser from "./users/CreateUser";
 import UserList from "./users/UserList";
-
+import useInputs from "./users/useInputs";
 
 //상태값 한번에 초기화 
 const initialState = {
-  inputs: {
-    username : '',
-    email : '' 
-  },
   users: [
       {
           id: 1,
@@ -41,14 +37,6 @@ function onCountActiveUsers (users) {
 //엑션별 상태관리 함수
 function reducer(state, action) {
   switch(action.type) {
-    case 'CHANGE_INPUT':
-      return {
-        ...state,
-        inputs: {
-          ...state.inputs,
-          [action.name] : action.value
-        }
-      };
     case 'CREATE_USER':
       return {
         inputs: initialState.inputs,
@@ -77,20 +65,15 @@ function reducer(state, action) {
 function App() {
 
   const [state, dispatch] = useReducer(reducer, initialState);
-  const {username, email} = state.inputs;
+  const [form, onChange, onReset] = useInputs({
+    username : '',
+    email : ''
+  });
+
+  const { username, email } = form;
   const {users} = state;
   const nextId = useRef(4);
 
-  const onChange = useCallback(e => {
-    const {name, value} = e.target;
-    dispatch({
-      type: 'CHANGE_INPUT',
-      name, 
-      value
-    });
-  }, []);
-
-  
   const onCreate = useCallback(() => {
     dispatch({
       type : 'CREATE_USER',
@@ -101,6 +84,7 @@ function App() {
       }
     });
     nextId.current += 1;
+    onReset();
   }, [username, email]);
 
 
