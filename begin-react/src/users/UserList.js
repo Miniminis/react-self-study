@@ -29,7 +29,7 @@ const User = React.memo(
     }
 );
 
-function UserList( {users, onRemove, onToggle}) {
+function UserList({ users, onRemove, onToggle }) {
     return (
         <div>
             {
