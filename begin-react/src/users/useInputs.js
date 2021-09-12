@@ -1,4 +1,4 @@
-import React, {useCallback, useState} from "react";
+import {useCallback, useState} from "react";
 
 function useInputs(initialForm) {
     const [form, setForm] = useState(initialForm);
