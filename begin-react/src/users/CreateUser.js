@@ -24,7 +24,7 @@ function CreateUser() {
         });
         nextId.current += 1;
         onReset();
-    }, [username, email]);
+    }, [dispatch, username, email, onReset]);
 
     return (
         <div>
