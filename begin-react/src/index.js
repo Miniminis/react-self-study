@@ -7,7 +7,7 @@ import ContextApi from './context-api/context-api';
 
 ReactDOM.render(
   <React.StrictMode>
-    <ContextApi />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );
