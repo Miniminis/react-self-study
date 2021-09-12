@@ -25,7 +25,7 @@ const initialState = {
           active : true
       }
   ]
-};
+}
 
 
 function onCountActiveUsers (users) {
@@ -59,7 +59,6 @@ export const UserDispatch = createContext(null);
 
 
 function App() {
-
   const [state, dispatch] = useReducer(reducer, initialState);
   const {users} = state;
 
