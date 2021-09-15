@@ -1,32 +1,57 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useReducer } from "react";
 import axios from "axios";
 
+function reducer(state, action) {
+    switch (action.type) {
+        case 'LOADING':
+            return {
+                loading : true,
+                data : null,
+                error : null
+            };
+        case 'SUCCESS':
+            return {
+                loading: false,
+                data : action.data,
+                error : null
+            };
+        case 'ERROR':
+            return {
+                loading: false,
+                data : null,
+                error : action.error
+            };
+        default :
+            throw new Error(`Unhandled Action Error! ${action.type}`);
+    }
+}
+
 function Users() {
-    const [users, setUsers] = useState(null);
-    const [load, setLoad] = useState(false);
-    const [error, setError] = useState(null);
+    const [state , dispatch]  = useReducer(reducer, {
+        loading: false,
+        data : null,
+        error : null
+    })
 
     const fetchUsers = async () => {
-        try {
-            setError(null); //요청 시작할때에는 error 와 users 를 초기화 한다.
-            setUsers(null);
-            setLoad(true);  //loading 은 true 로 수정
+        dispatch({ type : 'LOADING' })
 
-            const response = await axios.get(
-                'https://jsonplaceholder.typicode.com/users'
-            );
-            setUsers(response.data);    // 데이터는 response.data 안에 들어있습니다.
+        try {
+            const response = await axios.get('https://jsonplaceholder.typicode.com/users');
+            dispatch({ type : 'SUCCESS', data : response.data });
         } catch (e) {
-            setError(e);
+            dispatch({ type : 'ERROR', error : e });
         }
-        setLoad(false);
     };
 
     useEffect(() => {
         fetchUsers();
     }, []);
 
-    if (load) return <div>로딩중...!</div>;
+
+    const { loading, data: users, error } = state;
+
+    if (loading) return <div>로딩중...!</div>;
     if (error) return <div>에러가 발생했습니다!</div>;
     if (!users) return null;
 
