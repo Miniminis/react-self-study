@@ -1,3 +1,37 @@
+# TodoList 만들기
+
+## 프로젝트 구조
+- components
+  - TodoContext
+  - TodoCreate
+  - TodoHead
+  - TodoItem
+  - TodoList
+  - TodoTemplate
+- App.js
+
+## 앱 내부 구조
+- App
+  - TodoProvider : 상태관리 (todo state, dispatch action, todo index)
+    - GlobalStyle : 배경색
+    - TodoTemplate : 중앙 흰색박스
+      - TodoHead : 상단
+        - 제목
+        - 일자
+        - 남은 할일
+      - TodoList : 할일 목록
+        - 할일목록 블록
+        - 개별할일
+          - 개별할일 블록
+            - 체크박스
+            - 텍스트
+            - 할일 제거 아이콘
+      - TodoCreate : 할일 생성
+        - 입력창 포지셔너
+          - 입력폼
+            - 입력 input
+        - 생성버튼
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
